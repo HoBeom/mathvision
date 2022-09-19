@@ -40,7 +40,7 @@ def on_mouse(event, x, y, buttons, user_param):
                 done = close_polygon(points)
             return
         print("Adding point #%d with position(%d,%d)" % (len(points), x, y))
-        points.append([x, y])
+        points.append((x, y))
         prev_current = (x, y)
         if check_homography and len(points) == 4:
             done = close_polygon(points)
