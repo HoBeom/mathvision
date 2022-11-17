@@ -23,13 +23,10 @@ mean_x = pos[:, 0].mean()
 std_x = pos[:, 0].std()
 mean_y = pos[:, 1].mean()
 std_y = pos[:, 1].std()
-for x, y in pos:
-    norm_x = (x - mean_x) / std_x
-    norm_y = (y - mean_y) / std_y
-    A.append([norm_x, norm_y, norm_x * norm_y, norm_x ** 2, norm_y ** 2, 1])
-    I.append(img[y, x])
-A = np.array(A)
-I = np.array(I)
+norm_x = (pos[:, 0] - mean_x) / std_x
+norm_y = (pos[:, 1] - mean_y) / std_y
+A = np.vstack((norm_x, norm_y, norm_x * norm_y, norm_x ** 3, norm_y ** 3, np.ones_like(norm_x))).T
+I = np.array(img.reshape(-1, 1))
 A_plus = np.linalg.inv((A.T @ A)) @ A.T
 P = A_plus @ I
 background = A @ P
